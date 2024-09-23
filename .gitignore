@@ -1,0 +1,8 @@
+DEC/sim/output/
+DEC/syn/
+
+ENC/sim/output/
+ENC/syn/
+
+*.sh
+filelist.f
