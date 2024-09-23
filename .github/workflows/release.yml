@@ -1,0 +1,26 @@
+# This file describes a workflow that runs regression tests
+# on a pull request to the main branch
+name: Release-RTL
+run-name: Build a RTL delivery package from ${{ github.actor }}
+on:
+  release:
+    types: [released, prereleased]
+
+jobs:
+  Release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Create archive
+        run: |
+          zip -r delivery.zip . -x ".git*" -x "actions**" -x "rtl-actions" -x "SOURCEME.exa"
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./delivery.zip
+          asset_name: delivery.zip
+          asset_content_type: application/zip
