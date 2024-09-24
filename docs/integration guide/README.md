@@ -1,9 +1,9 @@
 # Integration Guide
 
-# Integration Example
+## Integration Example
 
-# Port List
-## ENC
+## Port List
+### ENC
 | Port           | Direction | Width    | Description                               |
 | :---           | :---      | :---     | :---                                      |
 | clk            | Input     | 1        | Clock                                     |
@@ -14,7 +14,7 @@
 | data_o         | Output    | 512      | Output data (same as data_i)              |
 | checksum_o     | Output    | 32       | Calculated checksum for input data        |
 
-## DEC
+### DEC
 | Port           | Direction | Width    | Description                               |
 | :---           | :---      | :---     | :---                                      |
 | clk            | Input     | 1        | Clock                                     |
