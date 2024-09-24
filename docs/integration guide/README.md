@@ -1,8 +1,8 @@
 # Integration Guide
 
-## Integration Example
+## 1. Integration Example
 
-## Port List
+## 2. Port List
 ### ENC
 | Port           | Direction | Width    | Description                               |
 | :---           | :---      | :---     | :---                                      |
