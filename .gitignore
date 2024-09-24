@@ -4,5 +4,9 @@ DEC/syn/
 ENC/sim/output/
 ENC/syn/
 
+actions/
+
 *.sh
 filelist.f
+env.source
+SOURCEME.exa
