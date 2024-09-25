@@ -1,6 +1,6 @@
 # Integration Guide
 
-## 1. Integration Example
+## 1. Block Diagram
 
 ## 2. Port List
 ### ENC
@@ -25,3 +25,5 @@
 | valid_o        | Output    | 1        | Valid signal for data_o, detected_o       |
 | data_o         | Output    | 512      | Output data (same as data_i)              |
 | detected_o     | Output    | 32       | Error detection signal ('1' if detected)  |             
+
+## 3. Test Specification
