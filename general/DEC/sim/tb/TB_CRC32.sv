@@ -5,7 +5,7 @@ module TB_CRC32;
     parameter DATA_WIDTH = 512;
     parameter CRC_WIDTH = 32;
 
-    parameter NUM_ITER = 10;
+    parameter NUM_ITER = 10000;
 
     logic                               clk;
     logic                               rst_n;
@@ -83,9 +83,10 @@ module TB_CRC32;
     initial begin
         // Reset
         rst_n                   = 1'b1;
+        valid_err_i             = 1'b0;
         #10 rst_n               = ~rst_n;
         #10 rst_n               = ~rst_n;
-        #10;
+        #15;
 
         // Simulation starts now.
         // Generate test stimuli.
@@ -97,7 +98,6 @@ module TB_CRC32;
                                         $urandom(), $urandom(), $urandom(), $urandom(),
                                         $urandom(), $urandom(), $urandom(), $urandom(),
                                         $urandom(), $urandom(), $urandom(), $urandom() };
-
             $display(">>> [%0t] Input data : 0x%X (Checksum : 0x%X)", $time, original_data, original_checksum);
 
             // 2) Inject errors on the encoded codeword.
@@ -111,19 +111,20 @@ module TB_CRC32;
 
             // 4) Check if the decoding is correct.
             if (corrupted === detected_o) begin
-                $display(">>> [%0t] Decoding finished : SUCCEED\n", $time);
+                $display(">>> [%0t] Decoding finished : SUCCEED (%d)\n", $time, corrupted);
                 succeed             += 1;
             end
             else begin
-                $display(">>> [%0t] Decoding finished : FAILED\n", $time);
+                $display(">>> [%0t] Decoding finished : FAILED (%d)\n", $time, corrupted);
                 failed              += 1;
             end
 
             #20;
         end
 
-        $display("-------------------------------------------");
-        $display("SUCCEED : %d, FAILED : %d", succeed, failed);
+        $display("-----------------------------------------------");
+        $display("  SUCCEED : %d, FAILED : %d", succeed, failed);
+        $display("-----------------------------------------------");
 
         #10 $finish;
     end
