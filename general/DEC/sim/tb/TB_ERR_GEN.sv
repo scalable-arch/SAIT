@@ -47,7 +47,7 @@ module ERR_GEN
                             checksum_n              = checksum_n ^ (1 << (bit_pos - DATA_WIDTH));
                         end
 
-                        $display("... Error injected at bit %d", bit_pos);
+                        //$display("... Error injected at bit %d", bit_pos);
                     end
                 end
             end

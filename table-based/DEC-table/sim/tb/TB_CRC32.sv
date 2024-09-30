@@ -115,9 +115,10 @@ module TB_CRC32;
     initial begin
         // Reset
         rst_n                   = 1'b1;
+        valid_err_i             = 1'b0;
         #10 rst_n               = ~rst_n;
         #10 rst_n               = ~rst_n;
-        #10;
+        #15;
 
         // Simulation starts now.
         // Generate test stimuli.
@@ -136,18 +137,18 @@ module TB_CRC32;
             valid_err_i             = 1'b1;
             wait(valid_err_o === 1'b1);  // error generation finished
             valid_err_i             = 1'b0;
-            $display(">>> [%0t] Corrupted data : 0x%X (Checksum : 0x%X) (%d)", $time, erroneous_data, erroneous_checksum, corrupted);
+            $display(">>> [%0t] Corrupted data : 0x%X (Checksum : 0x%X)", $time, erroneous_data, erroneous_checksum);
 
             // 3) Decode the corrupted codeword.
             wait(valid_dec_o === 1'b1);  // decoding finished
 
             // 4) Check if the decoding is correct.
             if (corrupted === detected_o) begin
-                $display(">>> [%0t] Decoding finished : SUCCEED\n", $time);
+                $display(">>> [%0t] Decoding finished : SUCCEED (%d)\n", $time, corrupted);
                 succeed             += 1;
             end
             else begin
-                $display(">>> [%0t] Decoding finished : FAILED\n", $time);
+                $display(">>> [%0t] Decoding finished : FAILED (%d)\n", $time, corrupted);
                 failed              += 1;
             end
 
