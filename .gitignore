@@ -1,18 +1,9 @@
-DEC/sim/output/
-DEC/syn/
-DEC-tree/sim/output/
-DEC-tree/syn/
-
-ENC/sim/output/
-ENC/syn/
-ENC-tree/sim/output/
-ENC-tree/syn/
-
 actions/
 
-C/bin
-C/obj
-
+**/syn/
+**/output/
+**/obj/
+**/bin/
 *.sh
 filelist.f
 env.source
