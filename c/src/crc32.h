@@ -24,7 +24,6 @@
 #define DATA_SIZE 64            // size of data in bytes
 #define CW_SIZE 68              // size of codeword in bytes
 #define BL 8                    // burst length
-#define NUM_ITER 10000000       // number of iterations for simulation
 
 extern uint32_t CRCTable[TABLE_SIZE];  // CRC lookup table
 
