@@ -1,11 +1,12 @@
 # Integration Guide
 
-## Overview
+# Overview
 
 This project provides the synthesis of a CRC32 encoder and decoder, along with the simulation of the CRC32 code's error detection performance.
 
-## CRC32 Encoder & Decoder Synthesis (Verilog)
-This section focuses on the Verilog RTL for synthesizing the CRC32 encoder and decoder logic.
+# CRC32 Encoder & Decoder Synthesis (System Verilog)
+
+This is the System Verilog RTL for synthesizing the CRC32 encoder and decoder logic.
 
 We offer two approaches for implementing CRC32 :
 
@@ -14,13 +15,65 @@ We offer two approaches for implementing CRC32 :
 
 Both methods allow synthesis using any desired CRC32 polynomial.
 
-For more information, please refer to the `README` in the `Verilog/` directory.
+Refer to https://crccalc.com/?crc=123456789&method=CRC-32&datatype=0&outtype=0 for possible CRC32 codes.
 
-### Port List
+## If you want to use **General** method
+
+### Before you start
+
+Set your desired polynomial value in the `sverilog/general/DEC/rtl/CRC32_GEN.sv` and `sverilog/general/ENC/rtl/CRC32_GEN.sv` :
+
+```
+`define     GEN_POLY                    //YOUR_CODE_HERE//
+`define     INIT_VAL                    //YOUR_CODE_HERE//
+`define     XOR_OUT                     //YOUR_CODE_HERE//
+```
+
+### Synthesizing Decoder
+
+```
+% cd sverilog/general/DEC
+```
+
+## If you want to use **Table-based** method
+
+### Before you start
+
+First you need to generate pre-calculated CRC32 table using `sverilog/table-based/python/gen_table.py`.
+
+Set your desired polynomial value in the `gen_table.py` :
+
+```
+CRC_POLY   = //YOUR_CODE_HERE//
+```
+
+Run `gen_table.py` and get the table :
+
+```
+% python gen_table.py
+%
+%
+```
+
+Copy and paste the result from `gen_table.py` in the `sverilog/table-based/DEC-table/rtl/CRC32_DEC.sv` and `sverilog/table-based/ENC-table/rtl/CRC32_ENC.sv` :
+
+```
+localparam [DATA_WIDTH-1:0] CRC_COEFF_TABLE[CRC_WIDTH-1:0] = '{ //YOUR_TABLE_HERE// }
+```
+
+### Synthesizing Decoder
+
+```
+% cd sverilog/table-based/DEC-table
+%
+%
+```
+
+## Port List
 
 The following tables detail the port specifications for the CRC32 encoder and decoder modules.
 
-#### Encoder
+### Encoder
 | Port           | Direction | Width    | Description                               |
 | :---           | :---      | :---     | :---                                      |
 | clk            | Input     | 1        | Clock                                     |
@@ -31,7 +84,7 @@ The following tables detail the port specifications for the CRC32 encoder and de
 | data_o         | Output    | 512      | Output data (same as data_i)              |
 | checksum_o     | Output    | 32       | Calculated checksum for input data        |
 
-#### Decoder
+### Decoder
 | Port           | Direction | Width    | Description                               |
 | :---           | :---      | :---     | :---                                      |
 | clk            | Input     | 1        | Clock                                     |
@@ -43,15 +96,36 @@ The following tables detail the port specifications for the CRC32 encoder and de
 | data_o         | Output    | 512      | Output data (same as data_i)              |
 | detected_o     | Output    | 32       | Error detection signal ('1' if detected)  |      
 
+# Error Detection Performance Simulation (C)
 
-## Error Detection Performance Simulation (C)
-This section includes simple C code simulations to evaluate the error detection capabilities of the CRC32 code.
+This is the simple C code to evaluate the error detection capabilities of the CRC32 code.
 
+There are three different modes for different purposes :
 
++ **Simulation mode** : Evaluates the error detection capabilities of given CRC32 code using Monte Carlo simulation.
++ **Table generation mode** : Generates a CRC32 lookup table.
++ **Encoding mode** : Computes the CRC32 checksum for the given data.
+  + Before using encoding mode, the table must be generated in **table generation mode**.
 
+## Run
 
+Build :
 
+```
+$ cd c/src
+% make
+```
 
-You can also verify the encoding result of given data using ~~ mode.
+Run in the simulation mode.
 
-       
+```
+$ cd ../bin
+% ./crc32 sim
+```
+
+Or run in the encoding mode.
+
+```
+$ cd ../bin
+% ./crc32 enc
+```
