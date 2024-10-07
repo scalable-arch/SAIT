@@ -101,11 +101,11 @@ Below are the port specifications for the CRC32 encoder and decoder modules.
 
 ### Encoder
 
-![CRC32 Encoder](figures/crc32_enc.png)
+![CRC32 Encoder](../../figures/crc32_enc.png)
 
 ### Decoder
 
-![CRC32 Decoder](figures/crc32_dec.png)
+![CRC32 Decoder](../../figures/crc32_dec.png)
 
 
 
