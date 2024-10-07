@@ -15,7 +15,7 @@ We provide two approaches for implementing CRC32:
 
 Both methods allow synthesis using any desired CRC32 polynomial.
 
-Refer to https://crccalc.com/?crc=123456789&method=CRC-32&datatype=0&outtype=0 for possible CRC32 codes.
+Refer to [this link](https://crccalc.com/?crc=123456789&method=CRC-32&datatype=0&outtype=0) for possible CRC32 codes.
 
 ## If you want to use the **General** method
 
@@ -101,11 +101,11 @@ Below are the port specifications for the CRC32 encoder and decoder modules.
 
 ### Encoder
 
-Diagram here
+![CRC32 Encoder](figures/crc32_enc.png)
 
 ### Decoder
 
-Diagram here
+![CRC32 Decoder](figures/crc32_dec.png)
 
 
 
