@@ -33,6 +33,7 @@ Set your desired polynomial value in the `sverilog/general/DEC/rtl/CRC32_GEN.sv`
 
 ```
 % cd sverilog/general/DEC
+% ?
 ```
 
 ## If you want to use **Table-based** method
@@ -51,8 +52,6 @@ Run `gen_table.py` and get the table :
 
 ```
 % python gen_table.py
-%
-%
 ```
 
 Copy and paste the result from `gen_table.py` in the `sverilog/table-based/DEC-table/rtl/CRC32_DEC.sv` and `sverilog/table-based/ENC-table/rtl/CRC32_ENC.sv` :
@@ -65,8 +64,7 @@ localparam [DATA_WIDTH-1:0] CRC_COEFF_TABLE[CRC_WIDTH-1:0] = '{ //YOUR_TABLE_HER
 
 ```
 % cd sverilog/table-based/DEC-table
-%
-%
+% ?
 ```
 
 ## Port List
