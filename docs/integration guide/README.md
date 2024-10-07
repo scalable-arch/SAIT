@@ -1,12 +1,10 @@
-# Integration Guide
-
 # Overview
 
-This project provides the synthesis of a CRC32 encoder and decoder, along with the simulation of the CRC32 code's error detection performance.
+This project provides SystemVerilog code for the synthesis of a CRC32 encoder and decoder, along with the C-based simulation to evaluate the error detection performance of the CRC32 code.
 
-# CRC32 Encoder & Decoder Synthesis (System Verilog)
+# CRC32 Encoder & Decoder Synthesis (SystemVerilog)
 
-This is the System Verilog RTL for synthesizing the CRC32 encoder and decoder logic.
+This is the SystemVerilog RTL for synthesizing the CRC32 encoder and decoder logic.
 
 We offer two approaches for implementing CRC32 :
 
@@ -72,6 +70,7 @@ localparam [DATA_WIDTH-1:0] CRC_COEFF_TABLE[CRC_WIDTH-1:0] = '{ //YOUR_TABLE_HER
 The following tables detail the port specifications for the CRC32 encoder and decoder modules.
 
 ### Encoder
+
 | Port           | Direction | Width    | Description                               |
 | :---           | :---      | :---     | :---                                      |
 | clk            | Input     | 1        | Clock                                     |
@@ -83,6 +82,7 @@ The following tables detail the port specifications for the CRC32 encoder and de
 | checksum_o     | Output    | 32       | Calculated checksum for input data        |
 
 ### Decoder
+
 | Port           | Direction | Width    | Description                               |
 | :---           | :---      | :---     | :---                                      |
 | clk            | Input     | 1        | Clock                                     |
@@ -94,36 +94,68 @@ The following tables detail the port specifications for the CRC32 encoder and de
 | data_o         | Output    | 512      | Output data (same as data_i)              |
 | detected_o     | Output    | 32       | Error detection signal ('1' if detected)  |      
 
+## Block diagram of encoder & decocder
+
+### Encoder
+
+picture here
+
+### Decoder
+
+picture here
+
+
+
 # Error Detection Performance Simulation (C)
 
 This is the simple C code to evaluate the error detection capabilities of the CRC32 code.
 
-There are three different modes for different purposes :
+There are two different modes for different purposes :
 
 + **Simulation mode** : Evaluates the error detection capabilities of the given CRC32 code using Monte Carlo simulation.
   + You can change the number of iterations by setting `NUM_ITER` in the `crc32.h`.
-+ **Table generation mode** : Generates a CRC32 lookup table.
 + **Encoding mode** : Computes the CRC32 checksum for the given data.
+  + You can verify the result of the SystemVerilog code by comparing it with the result from this mode.
 
 ## Run
 
 Build :
 
 ```
-$ cd c/src
+% cd c/src
 % make
 ```
 
-Run in the simulation mode.
+Run in the simulation mode :
 
 ```
-$ cd ../bin
+% cd ../bin
 % ./crc32 sim
 ```
 
-Or run in the encoding mode.
+Or run in the encoding mode :
 
 ```
-$ cd ../bin
+% cd ../bin
 % ./crc32 enc
+```
+
+## Example Output
+
+Simulation mode :
+
+```
+% ./crc32 sim
+##### Result #####
+Total detected error       : 10000000 / 10000000 (100.00%)
+Odd error                  : 5000082 / 5000082 (100.00%)
+Burst error (length <= 32) : 10000000 / 10000000 (100.00%)
+```
+
+Encoding mode :
+
+```
+% ./crc32 enc
+[Data] : 121A8913_9A5E0102_13FF89FA_2400FEFE_342BAB57_BC6F2346_57FFABCE_6800DCED_563CCD9B_DE7A458A_9BFFCDB0_AC00BAFA_784DEFDF_F08B67CE_DFFFEF0C_E00098CE
+[Checksum] : 575A8EF2
 ```
