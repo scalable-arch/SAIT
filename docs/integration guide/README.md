@@ -102,10 +102,10 @@ This is the simple C code to evaluate the error detection capabilities of the CR
 
 There are three different modes for different purposes :
 
-+ **Simulation mode** : Evaluates the error detection capabilities of given CRC32 code using Monte Carlo simulation.
++ **Simulation mode** : Evaluates the error detection capabilities of the given CRC32 code using Monte Carlo simulation.
+  + You can change the number of iterations by setting `NUM_ITER` in the `crc32.h`.
 + **Table generation mode** : Generates a CRC32 lookup table.
 + **Encoding mode** : Computes the CRC32 checksum for the given data.
-  + Before using encoding mode, the table must be generated in **table generation mode**.
 
 ## Run
 
