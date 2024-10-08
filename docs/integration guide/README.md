@@ -208,3 +208,8 @@ There are two functions for injecting errors in the simulation:
   + Randomly generates a burst error with a length less than or equal to 32 in the codeword.
 
 Currently, the function used for injecting errors is `genBurstError`, but if you want to customize the type of error, you can modify and use either `genError` or `genBurstError`.
+
+
+# Effective CRC32 via Bit Reordering for HBM
+
+//
