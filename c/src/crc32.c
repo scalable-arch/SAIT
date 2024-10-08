@@ -61,7 +61,6 @@ uint32_t CRCTable[TABLE_SIZE] = {
     0x00006628, 0x00006687, 0x00006776, 0x000067D9, 0x00006494, 0x0000643B, 0x000065CA, 0x00006565,
 };
 
-// TODO : data input dataStream에 들어오도록
 int main(int argc, char *argv[]) {
 
     ProgramMode mode = getMode(argc, argv);
@@ -82,18 +81,23 @@ int main(int argc, char *argv[]) {
 
         // Encoding mode generate CRC checksum for the input data stream.
         case MODE_ENCODING : {
-            uint32_t dataStream[GROUP_SIZE][BL] = {
-                {
-                    0x12345678, 0x9ABCDEF0, 0x13579BDF, 0x2468ACE0,
-                    0x1A2B3C4D, 0x5E6F7A8B, 0xFFFFFFFF, 0x00000000,
-                },
-                {
-                    0x89ABCDEF, 0x01234567, 0x89ABCDEF, 0xFEDCBA98,
-                    0x13579BDF, 0x02468ACE, 0xFACEB00C, 0xFEEDFACE,
-                }
-            };  // TODO
+            // Get input data chunk : read from 'data.txt'
+            uint32_t dataStream[GROUP_SIZE][BL];
 
-            //uint32_t dataStream[GROUP_SIZE][BL];  // input data chunk
+            FILE *inputFile = fopen("../src/data.txt", "r");
+            if (inputFile == NULL) {
+                printf("Unable to open data.txt\n");
+                return 1;
+            }
+            
+            for (int i = 0; i < GROUP_SIZE; ++i) {
+                for (int j = 0; j < BL; ++j) {
+                    fscanf(inputFile, "%x", &dataStream[i][j]);
+                }
+            }
+
+            fclose(inputFile);
+
             uint8_t* data = (uint8_t*)calloc(DATA_SIZE, sizeof(uint8_t));
 
             // Serialize data chunk into data

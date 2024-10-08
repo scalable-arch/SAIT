@@ -60,26 +60,31 @@ set_input_transition 0.1 [all_inputs]
 # If max_area is set 0, DesignCompiler will minimize the design as small as possible
 set_max_area 0 
 
-# ---------------------------------------
-# 3. Compilation
-# ---------------------------------------
-compile_ultra
+for {set i 0} {$i < 10} {incr i} {
+  # ---------------------------------------
+  # 3. Compilation
+  # ---------------------------------------
+  compile_ultra
 
-# ---------------------------------------
-# 4. Design Reports
-# ---------------------------------------
+  # ---------------------------------------
+  # 4. Design Reports
+  # ---------------------------------------
+  report_area -physical -hierarchy        > $topmodule_name.area_$i.rpt
+  report_timing -nworst 10 -max_paths 10  > $topmodule_name.timing_$i.rpt
+}
+
 check_design  > $topmodule_name.check_design.rpt
 
 report_constraint -all_violators -verbose -sig 10 > $topmodule_name.all_viol.rpt
 
 report_design                           > $topmodule_name.design.rpt
-report_area -physical -hierarchy        > $topmodule_name.area.rpt
+#report_area -physical -hierarchy        > $topmodule_name.area.rpt
 report_cell                             > $topmodule_name.cell.rpt
 report_qor                              > $topmodule_name.qor.rpt
 report_reference                        > $topmodule_name.reference.rpt
 report_resources                        > $topmodule_name.resources.rpt
 report_hierarchy -full                  > $topmodule_name.hierarchy.rpt
-report_timing -nworst 10 -max_paths 10  > $topmodule_name.timing.rpt
+#report_timing -nworst 10 -max_paths 10  > $topmodule_name.timing.rpt
 report_power -analysis_effort high      > $topmodule_name.power.rpt
 report_threshold_voltage_group          > $topmodule_name.vth.rpt
 

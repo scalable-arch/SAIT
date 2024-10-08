@@ -4,31 +4,45 @@
 import numpy as np
 from functools import reduce
 
-CRC_POLY   = 0x000000AF  # define your generator polynomial here
+# Define your CRC32 here.
+# GEN_POLY : CRC32 generator polynomial (Ignore the highest "1").
+CRC_POLY   = 0x814141AB
+
+# Code configuration
 DATA_WIDTH = 512
 CRC_WIDTH  = 32
 
 def gen_crc_table() :
-    crc_poly = np.pad(np.array(list(f'{CRC_POLY:0{CRC_WIDTH}b}'), dtype=int), (0, DATA_WIDTH), 'constant')
+    # Generate numpy object from parameters.
+    crc_poly = np.array(list(f'{CRC_POLY:0{CRC_WIDTH}b}'), dtype=int)
+    init_value = np.zeros(CRC_WIDTH, dtype=int)
+
     crc_coeff_table = np.zeros((CRC_WIDTH, DATA_WIDTH), dtype=int)
 
-    zero = np.zeros(DATA_WIDTH + CRC_WIDTH, dtype=int)
+    # Calculate CRC checksum for each one 1's data and save it to the table.
+    for bit_pos in range(DATA_WIDTH) :
 
-    for bit_pos in range(DATA_WIDTH) :  # 계산할 data
-        dividend = zero.copy()
-        dividend[bit_pos] = 1
+        # Set dividend and initial crc value.
+        dividend = np.zeros(DATA_WIDTH, dtype=int)
+        dividend[bit_pos] ^= 1
+        crc_temp = init_value.copy()
 
-        for _ in range(DATA_WIDTH) :    # 해당 data에 대한 crc 계산
-            if dividend[0] == 1 :
-                dividend = np.roll(dividend, -1)
-                dividend[-1] = 0
-                dividend ^= crc_poly
+        # Calculate CRC.
+        for _ in range(DATA_WIDTH) :  # calculate
+            if dividend[0] != crc_temp[0] :
+                crc_temp = np.roll(crc_temp, -1)
+                crc_temp[-1] = 0
+                crc_temp ^= crc_poly
             else :
-                dividend = np.roll(dividend, -1)
-                dividend[-1] = 0
+                crc_temp = np.roll(crc_temp, -1)
+                crc_temp[-1] = 0
+            
+            dividend = np.roll(dividend, -1)
+            dividend[-1] = 0
 
-        for i in range(CRC_WIDTH) :
-            if dividend[i] == 1 :
+        # Save the output.
+        for i in range(CRC_WIDTH) :   # save
+            if crc_temp[i] == 1 :
                 crc_coeff_table[i][bit_pos] = 1
 
     return crc_coeff_table
@@ -55,9 +69,14 @@ def calc_crc(input_data) :  # just for test
 
 crc_coeff_table = gen_crc_table()
 
-print("CRC polynomial :0x%X" % CRC_POLY)
+print("-----------------------------------------")
+print("CRC32 polynomial : 0x%08X" % CRC_POLY)
+print("-----------------------------------------")
+print("CRC32 Table")
+print("-----------------------------------------")
+
 print_crc_table(crc_coeff_table)
 
-# input_data = 0x3b29e21369262e70fe9c33fd3d5d03e220adb2970564cbf17a0900c5cea5c6ecf6a47a480947d40c214b2b2c70a8386b51ab091b73a72e45a4d00ef4c333cd6c
-# checksum = calc_crc(input_data)
-# print(checksum)
+#input_data = 0x3b29e21369262e70fe9c33fd3d5d03e220adb2970564cbf17a0900c5cea5c6ecf6a47a480947d40c214b2b2c70a8386b51ab091b73a72e45a4d00ef4c333cd6c
+#checksum = calc_crc(input_data)
+#print(checksum)
