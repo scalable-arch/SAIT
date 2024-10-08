@@ -16,8 +16,6 @@ We provide two approaches for implementing CRC32:
 
 Both methods allow synthesis using any desired CRC32 polynomial.
 
-Refer to [this link](https://crccalc.com/?crc=123456789&method=CRC-32&datatype=0&outtype=0) for possible CRC32 codes.
-
 ## If you want to use the **General** method
 
 ### Before you start
@@ -25,9 +23,9 @@ Refer to [this link](https://crccalc.com/?crc=123456789&method=CRC-32&datatype=0
 Set your desired polynomial value in `sverilog/general/DEC/rtl/CRC32_GEN.sv` and `sverilog/general/ENC/rtl/CRC32_GEN.sv`:
 
 ```
-`define     GEN_POLY                    //YOUR_CODE_HERE//
-`define     INIT_VAL                    //YOUR_CODE_HERE//
-`define     XOR_OUT                     //YOUR_CODE_HERE//
+// Define your CRC32 here.
+// GEN_POLY : CRC32 generator polynomial (Ignore the highest "1").
+`define     GEN_POLY                    //YOUR_POLY_HERE//
 ```
 
 ### Synthesizing Decoder
@@ -53,7 +51,9 @@ You need to generate a pre-calculated CRC32 table using `sverilog/table-based/py
 Set your desired polynomial value in `gen_table.py`:
 
 ```
-CRC_POLY   = //YOUR_CODE_HERE//
+# Define your CRC32 here.
+# GEN_POLY : CRC32 generator polynomial (Ignore the highest "1").
+CRC_POLY   = //YOUR_POLY_HERE//
 ```
 
 Run `gen_table.py` to get the table:
