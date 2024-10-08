@@ -1,6 +1,7 @@
 # Overview
 
 This project provides
+
 + SystemVerilog code for the synthesis of a CRC32 encoder and decoder, along with
 + C-based simulation to evaluate the error detection performance of the CRC32 code.
 
@@ -196,3 +197,14 @@ Encoding mode:
 [Data] : 121A8913_9A5E0102_13FF89FA_2400FEFE_342BAB57_BC6F2346_57FFABCE_6800DCED_563CCD9B_DE7A458A_9BFFCDB0_AC00BAFA_784DEFDF_F08B67CE_DFFFEF0C_E00098CE
 [Checksum] : 575A8EF2
 ```
+
+## Note for Error Injection in the Simulation
+
+There are two functions for injecting errors in the simulation:
+
++ `genError`
+  + Randomly generates errors in the entire codeword.
++ `genBurstError` (default)
+  + Randomly generates a burst error with a length less than or equal to 32 in the codeword.
+
+Currently, the function used for injecting errors is `genBurstError`, but if you want to customize the type of error, you can modify and use either `genError` or `genBurstError`.
