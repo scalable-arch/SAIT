@@ -100,7 +100,7 @@ int main(int argc, char *argv[]) {
             serialize(dataStream, data, DQ_SIZE, GROUP_SIZE);
 
             // Now encoding.
-            uint32_t checksum = calcCRCWithTable(data, DATA_SIZE);  // checksum for the received data
+            uint32_t checksum = calcCRC(data, DATA_SIZE);  // checksum for the received data
 
             // Show data and the calculated checksum.
             printf("[Data] : ");
