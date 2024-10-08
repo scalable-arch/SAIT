@@ -33,7 +33,14 @@ Set your desired polynomial value in `sverilog/general/DEC/rtl/CRC32_GEN.sv` and
 
 ```
 % cd sverilog/general/DEC
-% dc_shell-xg-t -f synth.tcl (TO BE MODIFIED)
+% dc_shell-xg-t -f script.tcl
+```
+
+### Synthesizing Encoder
+
+```
+% cd sverilog/general/ENC
+% dc_shell-xg-t -f script.tcl
 ```
 
 ## If you want to use the **Table-based** method
@@ -65,7 +72,14 @@ localparam [DATA_WIDTH-1:0] CRC_COEFF_TABLE[CRC_WIDTH-1:0] = '{ //YOUR_TABLE_HER
 
 ```
 % cd sverilog/table-based/DEC-table
-% dc_shell-xg-t -f synth.tcl (TO BE MODIFIED)
+% dc_shell-xg-t -f script.tcl
+```
+
+### Synthesizing Encoder
+
+```
+% cd sverilog/table-based/ENC-table
+% dc_shell-xg-t -f script.tcl
 ```
 
 ## Port List
@@ -101,11 +115,11 @@ Below are the port specifications for the CRC32 encoder and decoder modules.
 
 ### Encoder
 
-<img src="../../figures/crc32_enc.png" alt="Example Image" width="800" />
+<img src="../figures/crc32_enc.png" alt="Example Image" width="800" />
 
 ### Decoder
 
-<img src="../../figures/crc32_enc.png" alt="Example Image" width="800" />
+<img src="../figures/crc32_enc.png" alt="Example Image" width="800" />
 
 
 # 2. Error Detection Performance Simulation (C)
