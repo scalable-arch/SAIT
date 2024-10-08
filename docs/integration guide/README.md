@@ -143,6 +143,15 @@ Set your desired polynomial value in `crc32.h`:
 #define XOR_VAL  //YOUR_CODE_HERE//
 ```
 
+To use the **Encoding mode**, a `data.txt` file containing the input data must be present in the `c/src/` directory.
+
+`data.txt` example:
+
+```
+0x12345678 0x9ABCDEF0 0x13579BDF 0x2468ACE0 0x1A2B3C4D 0x5E6F7A8B 0xFFFFFFFF 0x00000000
+0x89ABCDEF 0x01234567 0x89ABCDEF 0xFEDCBA98 0x13579BDF 0x02468ACE 0xFACEB00C 0xFEEDFACE
+```
+
 ## Running the Simulation
 
 Build:
