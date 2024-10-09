@@ -1,7 +1,1 @@
 **/output/
-**/obj/
-**/bin/
-*.sh
-filelist.f
-env.source
-SOURCEME.exa
