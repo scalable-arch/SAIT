@@ -216,4 +216,4 @@ Data bits are ordered as shown below to effectively cover errors caused by TSV f
 
 <img src="../figures/crc32_bit_order.PNG" alt="Example Image" width="1000" />
 
-
+Note that bit reordering is applied only to C codes, not to RTL.
