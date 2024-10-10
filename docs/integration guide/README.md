@@ -212,4 +212,8 @@ Currently, the function used for injecting errors is `genBurstError`, but if you
 
 # Effective CRC32 via Bit Reordering for HBM
 
-//
+Data bits are ordered as shown below to effectively cover errors caused by TSV faults.
+
+<img src="../figures/crc32_bit_order.PNG" alt="Example Image" width="1000" />
+
+
